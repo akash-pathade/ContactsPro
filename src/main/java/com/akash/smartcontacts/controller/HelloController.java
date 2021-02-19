@@ -1,24 +1,33 @@
 package com.akash.smartcontacts.controller;
 
 import com.akash.smartcontacts.dao.UserRepository;
-import com.akash.smartcontacts.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HelloController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("hello")
-    public String hello(){
+    @GetMapping("home")
+    public String home(){
 
-        User user = new User();
-        user.setName("Akash");
-        user.setAbout("Hi this is akash");
-        userRepository.save(user);
-        return "Hello World";
+//        User user = new User();
+//        user.setName("Akash");
+//        user.setAbout("Hi this is akash");
+//        userRepository.save(user);
+        return "home";
+    }
+
+    @GetMapping("about")
+    public String about(){
+
+//        User user = new User();
+//        user.setName("Akash");
+//        user.setAbout("Hi this is akash");
+//        userRepository.save(user);
+        return "about";
     }
 }
