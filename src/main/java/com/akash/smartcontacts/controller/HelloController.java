@@ -19,7 +19,7 @@ public class HelloController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("home")
+    @GetMapping({"home","index"})
     public String home(Model model) {
         model.addAttribute("title", "Smart Contact Manager | Home");
         return "index";
@@ -29,12 +29,6 @@ public class HelloController {
     public String about(Model model) {
         model.addAttribute("title", "Smart Contact Manager | About");
         return "about";
-    }
-
-    @GetMapping("index")
-    public String index(Model model) {
-        model.addAttribute("title", "Smart Contact Manager | Home");
-        return "index";
     }
 
     @GetMapping("login")
@@ -66,12 +60,13 @@ public class HelloController {
             model.addAttribute("user", new User());
             session.setAttribute("message", new Message("Successfully registered "+user.getName()+"!!","alert-success"));
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("user", user);
-            session.setAttribute("message", new Message("Something went wrong: " + e.getMessage() + " !!", "alert-danger"));
+            session.setAttribute("message", new Message("Something went wrong: " + e.getMessage() + " !!", "alert-danger "));
         }
 
-        return "signup";
+        return "redirect:signup";
     }
 }
