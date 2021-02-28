@@ -6,12 +6,14 @@ import com.akash.smartcontacts.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 public class HelloController {
@@ -19,7 +21,7 @@ public class HelloController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping({"home","index"})
+    @GetMapping({"home", "index"})
     public String home(Model model) {
         model.addAttribute("title", "Smart Contact Manager | Home");
         return "index";
@@ -45,9 +47,17 @@ public class HelloController {
     }
 
     @PostMapping("/doRegister")
-    public String doRegister(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean isAgree,
+    public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult results,
+                             @RequestParam(value = "agreement", defaultValue = "false") boolean isAgree,
                              Model model, HttpSession session) {
         try {
+
+//            This is to check if the form has any validation errors or not
+            if (results.hasErrors()) {
+                model.addAttribute("user", user);
+                return "signup";
+            }
+
             if (!isAgree) {
                 throw new Exception("You have not accepted terms and Condition");
             }
@@ -58,15 +68,14 @@ public class HelloController {
 
             User savedUser = userRepository.save(user);
             model.addAttribute("user", new User());
-            session.setAttribute("message", new Message("Successfully registered "+user.getName()+"!!","alert-success"));
+            session.setAttribute("message", new Message("Successfully registered " + user.getName() + "!!", "alert-success"));
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("user", user);
             session.setAttribute("message", new Message("Something went wrong: " + e.getMessage() + " !!", "alert-danger "));
         }
 
-        return "redirect:signup";
+        return "signup";
     }
 }

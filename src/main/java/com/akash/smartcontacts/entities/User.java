@@ -7,6 +7,8 @@ import lombok.ToString;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +23,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotBlank(message = "Name should not be blank")
+    @Size( max = 30, message = "Size should be more than 30")
     private String name;
     @Column(unique = true)
+    @NotBlank(message = "email should not be blank")
     private String email;
     private String password;
     private String role;
