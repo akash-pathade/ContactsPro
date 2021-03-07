@@ -4,6 +4,7 @@ import com.akash.smartcontacts.dao.UserRepository;
 import com.akash.smartcontacts.entities.User;
 import com.akash.smartcontacts.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,34 +17,40 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-public class HelloController {
+public class HomeController {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    private static final String TITLE ="title";
+    private static final String SIGNUP ="signup";
+
     @GetMapping({"home", "index"})
     public String home(Model model) {
-        model.addAttribute("title", "Smart Contact Manager | Home");
+        model.addAttribute(TITLE, "Smart Contact Manager | Home");
         return "index";
     }
 
     @GetMapping("about")
     public String about(Model model) {
-        model.addAttribute("title", "Smart Contact Manager | About");
+        model.addAttribute(TITLE, "Smart Contact Manager | About");
         return "about";
     }
 
     @GetMapping("login")
     public String login(Model model) {
-        model.addAttribute("title", "Smart Contact Manager | login");
+        model.addAttribute(TITLE, "Smart Contact Manager | login");
         return "login";
     }
 
-    @GetMapping("signup")
+    @GetMapping(SIGNUP)
     public String signup(Model model) {
-        model.addAttribute("title", "Smart Contact Manager | signup");
+        model.addAttribute(TITLE, "Smart Contact Manager | signup");
         model.addAttribute("user", new User());
-        return "signup";
+        return SIGNUP;
     }
 
     @PostMapping("/doRegister")
@@ -55,7 +62,7 @@ public class HelloController {
 //            This is to check if the form has any validation errors or not
             if (results.hasErrors()) {
                 model.addAttribute("user", user);
-                return "signup";
+                return SIGNUP;
             }
 
             if (!isAgree) {
@@ -65,8 +72,9 @@ public class HelloController {
             user.setEnabled(true);
             user.setImageURL("default_profile.png");
             user.setRole("ROLE_USER");
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-            User savedUser = userRepository.save(user);
+            userRepository.save(user);
             model.addAttribute("user", new User());
             session.setAttribute("message", new Message("Successfully registered " + user.getName() + "!!", "alert-success"));
 
@@ -76,6 +84,6 @@ public class HelloController {
             session.setAttribute("message", new Message("Something went wrong: " + e.getMessage() + " !!", "alert-danger "));
         }
 
-        return "signup";
+        return SIGNUP;
     }
 }

@@ -30,6 +30,7 @@ public class User {
     @Column(unique = true)
     @NotBlank(message = "email should not be blank")
     private String email;
+    @NotBlank(message = "password should not be blank")
     private String password;
     private String role;
     private boolean isEnabled;

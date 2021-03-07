@@ -11,21 +11,18 @@
 
 
 <!-- ======= Sign Up Section ======= -->
-<section id="signup" class="contact">
+<section id="signup" class="contact" style="padding-top: 100px">
 
     <div class="container" data-aos="fade-up">
-
-
         <div class="row gy-4">
-
             <div class="col-lg-3"></div>
-
-
             <div class="col-lg-6 ">
 
 
-                <form novalidate action="" th:action="@{/doRegister}" method="post" class="sign-up-form" th:object="${user}">
-                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-signup " role="alert">
+                <form novalidate action="" th:action="@{/doRegister}" method="post" class="sign-up-form"
+                      th:object="${user}">
+                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-signup "
+                         role="alert">
                         <p th:text="${session.message.content}"></p>
                         <th:block th:text="${#session.removeAttribute('message')}"></th:block>
                     </div>
@@ -33,12 +30,12 @@
 
                         <div class="col-md-6">
                             <label for="name">Name</label>
-<!--                            This is for validation-->
+                            <!--                            This is for validation-->
                             <input id="name" type="text" name="name" class="form-control " placeholder="Your Name"
                                    th:classAppend="${#fields.hasErrors('name')? 'is-invalid':''}"
                                    th:value="${user.name}"
                                    required>
-<!--Show dynamic error message , which is in Entity validation-->
+                            <!--Show dynamic error message , which is in Entity validation-->
                             <div class="invalid-feedback" th:each="e: ${#fields.errors('name')}" th:text="${e}">
 
                             </div>
@@ -59,7 +56,12 @@
                         <div class="col-md-12">
                             <label for="password">Password</label>
                             <input id="password" type="password" class="form-control" name="password"
+                                   th:classAppend="${#fields.hasErrors('password')? 'is-invalid':''}"
                                    placeholder="Password" required>
+                            <div class="invalid-feedback" th:each="e: ${#fields.errors('password')}" th:text="${e}">
+
+                            </div>
+
                         </div>
 
                         <div class="col-md-12">
@@ -70,7 +72,7 @@
                         </div>
 
                         <div class="form-group"><input type="checkbox" name="agreement" class="form-check-input"
-                                                        id="agreement"/> &nbsp;
+                                                       id="agreement"/> &nbsp;
                             <label for="agreement">Accept terms and conditions</label></div>
 
                         <div class=" col-md-12  d-flex justify-content-center align-items-center">
