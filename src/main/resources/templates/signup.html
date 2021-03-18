@@ -19,7 +19,7 @@
             <div class="col-lg-6 ">
 
 
-                <form novalidate action="" th:action="@{/doRegister}" method="post" class="sign-up-form"
+                <form action="" th:action="@{/doRegister}" method="post" class="sign-up-form"
                       th:object="${user}">
                     <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-signup "
                          role="alert">
@@ -77,10 +77,6 @@
 
                         <div class=" col-md-12  d-flex justify-content-center align-items-center">
                             <button type="submit">Sign Up</button>
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-
                             <button type="reset">Reset</button>
                         </div>
                     </div>

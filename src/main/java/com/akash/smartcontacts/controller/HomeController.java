@@ -40,7 +40,7 @@ public class HomeController {
         return "about";
     }
 
-    @GetMapping("login")
+    @GetMapping({"signin", "login", "log-in"})
     public String login(Model model) {
         model.addAttribute(TITLE, "Smart Contact Manager | login");
         return "login";

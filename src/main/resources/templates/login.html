@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" th:replace="base::Layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About | Contacts Pro</title>
+</head>
+<body>
+
+
+<!-- ======= LogIn Section ======= -->
+<section id="signup" class="contact" style="padding-top: 100px">
+
+    <div class="container" data-aos="fade-up">
+        <div class="row gy-4">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6 ">
+
+
+                <form action="" th:action="@{/signin}" method="post" class="sign-up-form">
+                    <div th:if="${param.error}" class="alert alert-signup">
+                        <p th:text="Invalid Username or password"></p>
+                    </div>
+
+                    <div class="row gy-4">
+
+                        <div class="col-md-12">
+                            <label for="name">User name</label>
+                            <input id="name" type="text" name="username" class="form-control "
+                                   placeholder="Your Username" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" class="form-control" name="password"
+                                   placeholder="Password" required>
+                        </div>
+
+                            <div class=" col-md-6  d-flex justify-content-center align-items-center">
+                                <button type="submit">Log In</button>
+                            </div>
+                            <div class=" col-md-6  d-flex justify-content-center align-items-center">
+                                <button type="reset">Reset</button>
+                            </div>
+                        </div>
+                </form>
+
+            </div>
+
+            <div class="col-lg-3"></div>
+
+        </div>
+
+    </div>
+
+</section><!-- End Contact Section -->
+
+
+</body>
+</html>
